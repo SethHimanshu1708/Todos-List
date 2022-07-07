@@ -14,13 +14,12 @@ import { About } from './component/About';
 function App() {
   let initTodo;
   if (localStorage.getItem("todos") === null) {
-    initTodo = [];
+    initTodo = null;
   } else {
     initTodo = JSON.parse(localStorage.getItem("todos"));
+    
   }
   const onDelete = (todo) => {
-    console.log("i am ondelete of todo", todo);
-
     setTodos(todos.filter((e) => {
       return e !== todo;
     }))
@@ -39,11 +38,12 @@ function App() {
       desc: desc
     }
     setTodos([...todos, myTodo]);
-    console.log(myTodo);
+  
   }
 
-  const [todos, setTodos] = useState([initTodo]);
+  const [todos, setTodos] = useState(initTodo);
   useEffect(() => {
+    
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos])
   return (
@@ -54,6 +54,7 @@ function App() {
           <Route exact path="/" element={
               <>
               <AddTodos addTodo={addTodo} />
+              {console.log(todos)}
               <Todos todos={todos} onDelete={onDelete} />
               </>
             }>
